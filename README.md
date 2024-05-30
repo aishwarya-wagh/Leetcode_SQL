@@ -213,4 +213,4 @@ For more information, visit the [Leetcode Top SQL 50 Study Plan](https://leetcod
 
 ### Customers Who Bought All Products
 *Difficulty: Medium*
-[Solution](src/Customers_Who
+[Solution](src/Customers_Who_Bought_All_Products.sql)
