@@ -70,3 +70,21 @@ insert into MovieRating (movie_id, user_id, rating, created_at) values ('3', '2'
 
 
 -- SOLUTION:
+select name as results from users
+    where user_id =(select mr.user_id
+                    from movierating mr join users u on mr.user_id=u.user_id
+                    group by mr.user_id order by count(*) desc, name asc
+                    limit 1)
+
+union all
+
+select title as results from movies
+    where movie_id =(   select mr.movie_id
+                        from movierating join movies m on m.movie_id= mr.movie_id
+                        where date_format(created_at,'%Y-%m') = ('2020-02')
+                        group by movie_id order by avg(rating) desc, title asc
+                        limit 1 )
+
+
+
+
