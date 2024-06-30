@@ -62,3 +62,24 @@ insert into Users (users_id, banned, role) values ('12', 'No', 'driver')
 insert into Users (users_id, banned, role) values ('13', 'No', 'driver')
 
 -- SOLUTION:
+with rides as (
+    select
+        request_at,
+        count(*) as total,
+        sum(
+            case    when status='completed' then 0
+                    else 1
+            end
+            ) as cancelled
+    from trips
+    where
+        client_id not in (select distinct users_id from users where banned='Yes')
+        and driver_id not in (select distinct users_id from users where banned='Yes')
+        and request_at between '2013-10-01' and '2013-10-03'
+    group by request_At
+)
+
+select
+    request_at as 'Day',
+    round(cancelled/total,2) as 'Cancellation Rate'
+from rides
